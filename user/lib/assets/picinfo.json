@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Accidents de route",
+    "img": "lib/assets/car-accident2.png"
+  },
+  {
+    "title": "Incendies",
+    "img": "lib/assets/feux.jpg"
+  },
+  {
+    "title":"fuite de gaz",
+    "img": "lib/assets/gas.png"
+
+  },
+  {
+    "title": "crise cardiaques ",
+    "img": "lib/assets/crises-cardiaque.jpg"
+  },
+
+  {
+    "title": "noyade",
+    "img": "lib/assets/noyade.png"
+  },
+  {
+    "title": "catastrophe naturelle",
+    "img": "lib/assets/natural-disaster.jpg"
+  }
+]
