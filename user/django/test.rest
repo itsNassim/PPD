@@ -1,0 +1,34 @@
+// Sign Up Request
+POST http://127.0.0.1:8000/authentication/signup/
+Content-Type: application/json
+
+{
+    "email": "adam@mail.com",
+    "username": "adam",
+    "password": "Pass1234!",
+    "first_name": "Adam",
+    "last_name": "Smith",
+    "phone_number": "1234567890",
+    "gender": "Male",
+    "date_of_birth": "1990-01-01",
+    "place_of_birth": "Someplace",
+    "address": "123 Street, City",
+    "role": "User"
+}
+
+###
+// Login Request
+POST http://127.0.0.1:8000/authentication/login/
+Content-Type: application/json
+
+{
+    "username": "adam",
+    "password": "Pass1234!"
+}
+
+
+###
+// Test Token Request
+GET http://127.0.0.1:8000/authentication/test_token/
+Content-Type: application/json 
+Authorization: Token fa0258d98eb46b82c747e96555419a7bba41a3dc

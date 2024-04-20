@@ -1,0 +1,86 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
+
+Future<void> saveToken(String token) async {
+  final storage = FlutterSecureStorage();
+  await storage.write(key: 'auth_token', value: token);
+}
+
+Future<String?> getToken() async {
+  final storage = FlutterSecureStorage();
+  return await storage.read(key: 'auth_token');
+}
+
+Future<bool> isLoggedIn() async {
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'auth_token');
+  return token != null && token.isNotEmpty;
+}
+
+
+Future<http.Response> signUp(
+    _username,
+    _email,
+    _password,
+    _firstName,
+    _lastName,
+    _phoneNumber,
+    _gender,
+    _dateOfBirth,
+    _placeOfBirth,
+    _address) async {
+  final url = Uri.parse('http://10.0.2.2:8000/authentication/signup/');
+  print('username: $_username, '
+      'email: $_email, '
+      'password: $_password, '
+      'firstName: $_firstName, '
+      'lastName: $_lastName, '
+      'phoneNumber: $_phoneNumber, '
+      'gender: $_gender, '
+      'dateOfBirth: ${_dateOfBirth != null ? DateFormat('yyyy-MM-dd').format(_dateOfBirth!) : 'null'}, '
+      'placeOfBirth: $_placeOfBirth, '
+      'address: $_address, '
+      'role: User');
+
+  final response = await http.post(
+    url,
+    body: jsonEncode({
+      "email": _email,
+      "username": _username,
+      "password": _password,
+      "first_name": _firstName,
+      "last_name": _lastName,
+      "phone_number": _phoneNumber,
+      "gender": _gender,
+      "date_of_birth": DateFormat('yyyy-MM-dd').format(_dateOfBirth!),
+      "place_of_birth": _placeOfBirth,
+      "address": _address,
+      "role": "User"
+    }),
+    headers: {'Content-Type': 'application/json'},
+  );
+
+  print(response.statusCode);
+  return response;
+}
+
+Future<http.Response> login(username, password) async {
+  print('username: $username, '
+      'password: $password,');
+  final url = Uri.parse('http://10.0.2.2:8000/authentication/login/');
+  final response = await http.post(
+    url,
+    body: jsonEncode({'username': username, 'password': password}),
+    headers: {'Content-Type': 'application/json'},
+  );
+  print(response.statusCode);
+  return response;
+}
+
+
+void logout() async {
+    final storage = FlutterSecureStorage();
+    await storage.delete(key: 'auth_token');
+}
