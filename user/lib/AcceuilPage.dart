@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:projetppd_2/Message.dart';
 
 class AcceuilPage extends StatelessWidget {
-  const AcceuilPage({super.key});
+  const AcceuilPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
       title: 'Emergency App',
       home: Scaffold(
-
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           toolbarHeight: 100.0,
-          title: const Text('Emergency', style: TextStyle(
-            fontSize: 30,
-            color: Colors.black87,
-            fontWeight: FontWeight.w700,
-          ),),
-         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 30.0,),
+          title: const Text(
+            'Emergency',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 30.0,
+            ),
             onPressed: () => Navigator.pop(context),
-              ),
-
+          ),
         ),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(40.0),
           child: Column(
             children: <Widget>[
-              Image.asset('icons/siren-lamp-call-center-emergency-phone-logo-icon-vector-38605467.jpg',height: 200,
-                width: 200,),
-              const SizedBox(height:50 ),
-
+              Image.asset(
+                'icons/siren-lamp-call-center-emergency-phone-logo-icon-vector-38605467.jpg',
+                height: 200,
+                width: 200,
+              ),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -41,10 +48,12 @@ class AcceuilPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _launchPhoneDialer('tel:411');
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(
-                              255, 212, 27, 34),
+                          backgroundColor:
+                              const Color.fromARGB(255, 212, 27, 34),
                           minimumSize: const Size(200, 70),
                         ),
                         child: Row(
@@ -57,18 +66,19 @@ class AcceuilPage extends StatelessWidget {
                               width: 24,
                             ),
                             const SizedBox(width: 50),
-                            const Text('411',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
+                            const Text(
+                              '411',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           minimumSize: const Size(200, 50),
@@ -83,18 +93,23 @@ class AcceuilPage extends StatelessWidget {
                               width: 24,
                             ),
                             const SizedBox(width: 29),
-                            const Text('CallNow ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
+                            const Text(
+                              'CallNow ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Message()),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           minimumSize: const Size(200, 50),
@@ -109,10 +124,13 @@ class AcceuilPage extends StatelessWidget {
                               width: 24,
                             ),
                             const SizedBox(width: 29),
-                            const Text('Message ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
+                            const Text(
+                              'Message ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -125,5 +143,13 @@ class AcceuilPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _launchPhoneDialer(String phoneNumber) async {
+    if (await canLaunch(phoneNumber)) {
+      await launch(phoneNumber);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
   }
 }

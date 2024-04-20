@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'pages/pages.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
       title: 'Emergency App',
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -14,25 +16,22 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-
               Image.asset('images/AidNow.png'),
               const SizedBox(height: 200),
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _launchPhoneDialer('tel:411');
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(
-                              255, 212, 27, 34),
+                          backgroundColor:
+                              const Color.fromARGB(255, 212, 27, 34),
                           minimumSize: const Size(200, 70),
-
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,29 +41,29 @@ class HomePage extends StatelessWidget {
                               fit: BoxFit.cover,
                               height: 24,
                               width: 24,
-
                             ),
                             const SizedBox(width: 50),
-                            const Text('411', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold,)),
+                            const Text('411',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                )),
                           ],
-
                         ),
-
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                         Navigator.push(
-                         context,
-                        MaterialPageRoute(builder: (context) => const Navigation()),
-    );
-  },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Navigation()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        minimumSize: const Size(200, 50),
-
-
-                      ),
+                          backgroundColor: Colors.white,
+                          minimumSize: const Size(200, 50),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -75,11 +74,12 @@ class HomePage extends StatelessWidget {
                               width: 24,
                             ),
                             const SizedBox(width: 25),
-                            const Text('Get Started', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold)),
+                            const Text('Get Started',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
                           ],
-
                         ),
-
                       ),
                     ],
                   ),
@@ -92,6 +92,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-
-
+  void _launchPhoneDialer(String phoneNumber) async {
+    if (await canLaunch(phoneNumber)) {
+      await launch(phoneNumber);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
+  }
 }
