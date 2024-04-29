@@ -32,11 +32,22 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
         child: ListView(
           children: [
             SizedBox(height: screenHeight * .12),
-            const Text(
-              'Welcome,',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+            RichText(
+              text: TextSpan(
+                text: 'Welcome To ',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'AidNow',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: screenHeight * .01),
@@ -100,13 +111,11 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) =>
-                            SignUpScreen()), // Navigate to SignUpScreen
+                    MaterialPageRoute(builder: (_) => SignUpScreen()),
                   );
                 },
                 child: RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     text: "I'm a new user, ",
                     style: TextStyle(color: Colors.black),
                     children: [

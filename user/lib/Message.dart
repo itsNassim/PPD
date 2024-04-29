@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:projetppd_2/EnlargedImageScreen.dart';
 
-import 'EnlargedImageScreen.dart';
 
 class Message extends StatefulWidget {
   const Message({Key? key}) : super(key: key);

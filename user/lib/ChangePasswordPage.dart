@@ -13,7 +13,7 @@ class ChangePasswordPage extends StatefulWidget {
     static String currentPassword = 'ing22024';
     static String newPassword = '';
     static String confirmPassword = '';
-    bool _obscureTextNew = true;
+    //bool _obscureTextNew = true;
     bool _obscureTextConfirm = true;
   @override
   Widget build(BuildContext context) {

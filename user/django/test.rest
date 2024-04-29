@@ -17,6 +17,17 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://127.0.0.1:8000/authentication/signup2/
+Content-Type: application/json
+
+{
+    
+    "username": "adam",
+    "blood_group": "O+"
+}
+
+###
 // Login Request
 POST http://127.0.0.1:8000/authentication/login/
 Content-Type: application/json
@@ -25,7 +36,15 @@ Content-Type: application/json
     "username": "adam",
     "password": "Pass1234!"
 }
+###
 
+POST http://127.0.0.1:8000/authentication/login/dispatcher/
+Content-Type: application/json
+
+{
+    "username": "dispatcher",
+    "password": "17nl626765"
+}
 
 ###
 // Test Token Request

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class EditProfilPage extends StatefulWidget {
   const EditProfilPage({super.key});
@@ -14,7 +16,14 @@ class _EditProfilPageState extends State<EditProfilPage> {
   String _email = "";
   String _region = "";
   DateTime _selectedDate = DateTime.now();
+  late ImagePicker _picker; // ImagePicker instance
+  File? _avatarImage; // Variable to hold the selected image
 
+  @override
+  void initState() {
+    super.initState();
+    _picker = ImagePicker(); // Initialize ImagePicker
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -22,19 +31,21 @@ class _EditProfilPageState extends State<EditProfilPage> {
       initialDate: _selectedDate,
       firstDate: DateTime(1900, 1, 1),
       lastDate: DateTime.now(),
-     // builder: (context, child ) => Theme(
-      //  data: ThemeData().copyWith(
-      //    colorScheme: ColorScheme.light(
-      //      surface:Color.fromARGB(255, 255, 223, 223),
-      //    ),
-      //    dialogBackgroundColor: Color.fromARGB(255, 255, 223, 223),
-      //  ),
-      //  child: child,
-    //  ),
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
+      });
+    }
+  }
+
+  // Function to pick an image from gallery
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        // Update the avatar image with the selected image from gallery
+        _avatarImage = File(pickedFile.path);
       });
     }
   }
@@ -45,11 +56,14 @@ class _EditProfilPageState extends State<EditProfilPage> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         toolbarHeight: 100.0,
-        title: const Text('Edit Profile', style: TextStyle(
-          fontSize: 30,
-          color: Colors.black87,
-          fontWeight: FontWeight.w700,
-        ),),
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black87,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -61,15 +75,37 @@ class _EditProfilPageState extends State<EditProfilPage> {
           key: _formKey,
           child: Column(
             children: [
-
-              const CircleAvatar(
-                radius: 50.0,
-                backgroundColor: Color.fromARGB(255, 255, 223, 223),
-                backgroundImage: AssetImage('icons/verification-de-lutilisateur.png'),
+              GestureDetector(
+                onTap: _pickImage, // Call _pickImage function when tapped
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundColor: const Color.fromARGB(255, 255, 223, 223),
+                      // Update the image based on user's selection
+                      backgroundImage: _avatarImage != null ? FileImage(_avatarImage!) : AssetImage('icons/verification-de-lutilisateur.png') as ImageProvider<Object>,
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          size: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
               const SizedBox(height: 80), // Add spacing
-
-
               TextFormField(
                 initialValue: _username,
                 decoration: const InputDecoration(
@@ -83,10 +119,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
                 },
                 onSaved: (newValue) => _username = newValue ?? "", // Save value
               ),
-
               const SizedBox(height: 10),
-
-
               TextFormField(
                 initialValue: _email,
                 decoration: const InputDecoration(
@@ -101,10 +134,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
                 },
                 onSaved: (newValue) => _email = newValue ?? "", // Save value
               ),
-
               const SizedBox(height: 10), // Add spacing
-
-
               TextFormField(
                 initialValue: _region,
                 decoration: const InputDecoration(
@@ -112,24 +142,20 @@ class _EditProfilPageState extends State<EditProfilPage> {
                 ),
                 onSaved: (newValue) => _region = newValue ?? "",
               ),
-
               const SizedBox(height: 10),
-
-
               Row(
                 children: [
                   const Text('Birthday: '),
                   TextButton(
                     onPressed: () => _selectDate(context),
-                    child: Text(DateFormat('y MMMM d').format(_selectedDate).toString(),  style: TextStyle(color: const Color.fromARGB(255, 120, 13, 11))),
-
+                    child: Text(
+                      DateFormat('y MMMM d').format(_selectedDate).toString(),
+                      style: const TextStyle(color: Color.fromARGB(255, 120, 13, 11)),
+                    ),
                   ),
                 ],
               ),
-
               const SizedBox(height: 20),
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -137,33 +163,26 @@ class _EditProfilPageState extends State<EditProfilPage> {
                     onPressed: () => Navigator.pop(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-
-
-
                     ),
-                    child: const Text('Cancel' ,style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold)),
-
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-
-
-
                         debugPrint('Username: $_username, Email: $_email, Region: $_region, Birthday: $_selectedDate');
                       }
-
-
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-
-
-
                     ),
-                    child: const Text('Save Profile',style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold)),
-
+                    child: const Text(
+                      'Save Profile',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

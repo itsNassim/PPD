@@ -296,7 +296,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             decoration: InputDecoration(
               labelText: 'Blood Group',
             ),
-            // Add validation if needed
           ),
         ],
       ),
@@ -313,8 +312,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (_currentStep < _buildSteps().length - 1) {
           _currentStep++;
         } else {
-          signUp(_username, _email, _password, _firstName, _lastName,
-              _phoneNumber, _gender, _dateOfBirth, _placeOfBirth, _address);
+          signUp(
+              _username,
+              _email,
+              _password,
+              _firstName,
+              _lastName,
+              _phoneNumber,
+              _gender,
+              _dateOfBirth,
+              _placeOfBirth,
+              _address,
+              _bloodGroupValue.toString());
         }
       });
     }
@@ -328,31 +337,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-    Future<void> signUp(
-      String username,
-      String email,
-      String password,
-      String firstName,
-      String lastName,
-      String phoneNumber,
-      String? gender,
-      DateTime? dateOfBirth,
-      String placeOfBirth,
-      String address,
-    ) async {
-      final response = await http_request.signUp(
-        username,
-        email,
-        password,
-        firstName,
-        lastName,
-        phoneNumber,
-        gender,
-        dateOfBirth,
-        placeOfBirth,
-        address,
-      );
+  Future<void> signUp(
+    String username,
+    String email,
+    String password,
+    String firstName,
+    String lastName,
+    String phoneNumber,
+    String? gender,
+    DateTime? dateOfBirth,
+    String placeOfBirth,
+    String address,
+    String bloodGroupValue,
+  ) async {
+    final response = await http_request.signUp(
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      phoneNumber,
+      gender,
+      dateOfBirth,
+      placeOfBirth,
+      address,
+    );
 
+    if (response.statusCode == 200) {
+      final response = await http_request.signUp2(username, bloodGroupValue);
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final token = responseData['token'];
@@ -382,6 +394,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
         );
       }
+    } else {
+      final errorMessage = jsonDecode(response.body)['error'];
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(errorMessage ?? 'Signup failed'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override

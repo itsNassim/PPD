@@ -19,7 +19,6 @@ Future<bool> isLoggedIn() async {
   return token != null && token.isNotEmpty;
 }
 
-
 Future<http.Response> signUp(
     _username,
     _email,
@@ -32,17 +31,6 @@ Future<http.Response> signUp(
     _placeOfBirth,
     _address) async {
   final url = Uri.parse('http://10.0.2.2:8000/authentication/signup/');
-  print('username: $_username, '
-      'email: $_email, '
-      'password: $_password, '
-      'firstName: $_firstName, '
-      'lastName: $_lastName, '
-      'phoneNumber: $_phoneNumber, '
-      'gender: $_gender, '
-      'dateOfBirth: ${_dateOfBirth != null ? DateFormat('yyyy-MM-dd').format(_dateOfBirth!) : 'null'}, '
-      'placeOfBirth: $_placeOfBirth, '
-      'address: $_address, '
-      'role: User');
 
   final response = await http.post(
     url,
@@ -62,25 +50,32 @@ Future<http.Response> signUp(
     headers: {'Content-Type': 'application/json'},
   );
 
-  print(response.statusCode);
+  return response;
+}
+
+Future<http.Response> signUp2(_username, _blood_group) async {
+  final url = Uri.parse('http://10.0.2.2:8000/authentication/signup2/');
+
+  final response = await http.post(
+    url,
+    body: jsonEncode({"username": _username, "blood_group": _blood_group}),
+    headers: {'Content-Type': 'application/json'},
+  );
+
   return response;
 }
 
 Future<http.Response> login(username, password) async {
-  print('username: $username, '
-      'password: $password,');
   final url = Uri.parse('http://10.0.2.2:8000/authentication/login/');
   final response = await http.post(
     url,
     body: jsonEncode({'username': username, 'password': password}),
     headers: {'Content-Type': 'application/json'},
   );
-  print(response.statusCode);
   return response;
 }
 
-
 void logout() async {
-    final storage = FlutterSecureStorage();
-    await storage.delete(key: 'auth_token');
+  final storage = FlutterSecureStorage();
+  await storage.delete(key: 'auth_token');
 }

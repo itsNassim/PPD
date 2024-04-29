@@ -42,6 +42,11 @@ dependencies:
   intl: ^0.19.0
   flutter_secure_storage: ^8.1.0
   http: ^1.2.1
+  image_picker: ^1.1.0
+  url_launcher: ^6.2.6
+  geolocator: ^11.0.0
+  latlong2: ^0.9.1
+  flutter_map: ^6.1.0
 get:
   
   
@@ -91,7 +96,8 @@ flutter:
    - lib/iconss/utilisateur.png
    - lib/iconss/la-gestion.png
    - lib/assets/
-   -icons/1976784.png
+   - icons/1976784.png
+   - lib/video/pics/
 
 
 

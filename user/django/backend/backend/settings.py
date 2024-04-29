@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     #local
     'authentication.apps.AuthenticationConfig',
     'core.apps.CoreConfig',
+    'call.apps.CallConfig',
     #3rd party
     'rest_framework',
     'rest_framework.authtoken',

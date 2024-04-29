@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 class UserInfo extends StatelessWidget {
   const UserInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-     final String userName = 'khadidjalrkb13';
-     final String email = 'khadidjalrkb2003@gmail.com';
+    final String userName = 'khadidjalrkb13';
+    final String email = 'khadidjalrkb2003@gmail.com';
     final String phoneNumber = '+213 557057900';
     final String wilaya = 'Constantine';
     final DateTime birthday = DateTime(2003, 03, 13);
@@ -16,11 +14,14 @@ class UserInfo extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Information', style: TextStyle(
-          fontSize: 30,
-          color: Colors.black87,
-          fontWeight: FontWeight.w700,
-        ),),
+        title: const Text(
+          'User Information',
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black87,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         toolbarHeight: 100.0,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
@@ -30,12 +31,12 @@ class UserInfo extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const Center(
                 child: CircleAvatar(
                   radius: 50,
                   backgroundColor: Color.fromARGB(255, 255, 223, 223),
-                  backgroundImage: AssetImage('icons/verification-de-lutilisateur.png'),
+                  backgroundImage:
+                      AssetImage('icons/verification-de-lutilisateur.png'),
                 ),
               ),
               const SizedBox(height: 20),
@@ -77,10 +78,8 @@ class UserInfo extends StatelessWidget {
                 'Birthday:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              Text(birthday?.toIso8601String() ?? 'Not provided'),
+              Text(birthday.toIso8601String()),
               const SizedBox(height: 10),
-
-
 
               if (diseases.isNotEmpty) ...[
                 const Text(
@@ -90,7 +89,9 @@ class UserInfo extends StatelessWidget {
                 const SizedBox(height: 5),
                 Wrap(
                   spacing: 8.0,
-                  children: diseases.map((disease) => Chip(label: Text(disease))).toList(),
+                  children: diseases
+                      .map((disease) => Chip(label: Text(disease)))
+                      .toList(),
                 ),
               ],
             ],
