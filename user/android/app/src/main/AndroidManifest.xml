@@ -3,9 +3,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="projetppd_2"
+        android:label="AidNow"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/aidnow3">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -33,9 +33,22 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-            <meta-data
+        <meta-data
             android:name="com.google.android.geo.API.KEY"
             android:value="AIzaSyAnVVphstMy_S-0dHaKgzufRuHCcOv8jfY" />
+
+        <!-- Add the receiver for local notifications -->
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility?hl=en and

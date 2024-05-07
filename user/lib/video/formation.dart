@@ -7,14 +7,14 @@ import 'crisesPage.dart';
 import 'gazPage.dart';
 import 'noyadePage.dart';
 
-class videoInfo extends StatefulWidget {
-  const videoInfo({super.key});
+class VideoInfo extends StatefulWidget {
+  const VideoInfo({Key? key}) : super(key: key);
 
   @override
-  State<videoInfo> createState() => _videoInfoState();
+  State<VideoInfo> createState() => _VideoInfoState();
 }
 
-class _videoInfoState extends State<videoInfo> {
+class _VideoInfoState extends State<VideoInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +95,7 @@ class _videoInfoState extends State<videoInfo> {
                       },
                       {
                         'img': "lib/video/pics/noyade.png",
-                        'title': "Drowing",
+                        'title': "Drowning",
                       },
                     ];
                     String imagePath = items[i]['img'];
@@ -160,15 +160,16 @@ class _videoInfoState extends State<videoInfo> {
                               ),
                             ),
                             Positioned.fill(
-                                child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_forward,
-                                color: Colors.transparent,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.transparent,
+                                ),
+                                onPressed: () {
+                                  navigateToSituationPage(title);
+                                },
                               ),
-                              onPressed: () {
-                                navigateTosituationPage(items[i]['title']);
-                              },
-                            ))
+                            )
                           ],
                         )
                       ],
@@ -181,8 +182,8 @@ class _videoInfoState extends State<videoInfo> {
     );
   }
 
-  void navigateTosituationPage(String situationtitle) {
-    switch (situationtitle) {
+  void navigateToSituationPage(String situationTitle) {
+    switch (situationTitle) {
       case 'Car Accident':
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => AccidentPage()));
@@ -203,7 +204,7 @@ class _videoInfoState extends State<videoInfo> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => CrisesCardiaquePage()));
         break;
-      case 'Drowing':
+      case 'Drowning':
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => NoyadePage()));
         break;

@@ -19,17 +19,8 @@ Future<bool> isLoggedIn() async {
   return token != null && token.isNotEmpty;
 }
 
-Future<http.Response> signUp(
-    _username,
-    _email,
-    _password,
-    _firstName,
-    _lastName,
-    _phoneNumber,
-    _gender,
-    _dateOfBirth,
-    _placeOfBirth,
-    _address) async {
+Future<http.Response> signUp(_username, _email, _password, _firstName,
+    _lastName, _phoneNumber, _gender, _dateOfBirth, _address) async {
   final url = Uri.parse('http://10.0.2.2:8000/authentication/signup/');
 
   final response = await http.post(
@@ -43,7 +34,6 @@ Future<http.Response> signUp(
       "phone_number": _phoneNumber,
       "gender": _gender,
       "date_of_birth": DateFormat('yyyy-MM-dd').format(_dateOfBirth!),
-      "place_of_birth": _placeOfBirth,
       "address": _address,
       "role": "User"
     }),

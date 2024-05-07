@@ -26,3 +26,14 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = User
         fields = ['id', 'username', 'password', 'email']
+
+
+class DiseaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Disease
+        fields = '__all__'        
+
+class UserDiseaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserDisease
+        fields = '__all__'

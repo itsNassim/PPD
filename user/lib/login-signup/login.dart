@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projetppd_2/login-signup/emailValidation.dart';
 import 'signup.dart';
 import 'dart:convert';
 import 'http_request.dart' as http_request;
-
-void main() {
-  runApp(const MaterialApp(
-    home: SimpleLoginScreen(),
-  ));
-}
+import 'package:projetppd_2/pages/home.dart';
 
 class SimpleLoginScreen extends StatefulWidget {
   const SimpleLoginScreen({Key? key}) : super(key: key);
@@ -27,108 +23,136 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: ListView(
+      appBar: AppBar(
+        title: Text('Log in'),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/background3.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
           children: [
-            SizedBox(height: screenHeight * .12),
-            RichText(
-              text: TextSpan(
-                text: 'Welcome To ',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: 'AidNow',
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: screenHeight * .01),
-            Text(
-              'Sign in to continue!',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black.withOpacity(.6),
-              ),
-            ),
-            SizedBox(height: screenHeight * .12),
-            InputField(
-              onChanged: (value) {
-                setState(() {
-                  username = value;
-                });
-              },
-              labelText: 'Username',
-              errorText: UsernameError,
-              textInputAction: TextInputAction.next,
-              autoFocus: true,
-            ),
-            SizedBox(height: screenHeight * .025),
-            InputField(
-              onChanged: (value) {
-                setState(() {
-                  password = value;
-                });
-              },
-              labelText: 'Password',
-              errorText: passwordError,
-              obscureText: true,
-              textInputAction: TextInputAction.next,
-              onSubmitted: (_) => login(context, username, password),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: screenHeight * .075,
-            ),
-            FormButton(
-              text: 'Log In',
-              onPressed: () => login(context, username, password),
-            ),
-            SizedBox(
-              height: screenHeight * .15,
+            // Colored container to reduce opacity
+            Container(
+              color: Colors.grey
+                  .withOpacity(0.25), // Adjust the opacity value as needed
+              width: double.infinity,
+              height: double.infinity,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => SignUpScreen()),
-                  );
-                },
-                child: RichText(
-                  text: TextSpan(
-                    text: "I'm a new user, ",
-                    style: TextStyle(color: Colors.black),
-                    children: [
-                      TextSpan(
-                        text: 'Sign Up',
+              child: ListView(
+                children: [
+                  SizedBox(height: screenHeight * .12),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Welcome To ',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'AidNow',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * .01),
+                  Text(
+                    'Sign in to continue!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black.withOpacity(.6),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * .12),
+                  InputField(
+                    onChanged: (value) {
+                      setState(() {
+                        username = value;
+                      });
+                    },
+                    labelText: 'Username',
+                    errorText: UsernameError,
+                    textInputAction: TextInputAction.next,
+                    autoFocus: true,
+                  ),
+                  SizedBox(height: screenHeight * .025),
+                  InputField(
+                    onChanged: (value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                    labelText: 'Password',
+                    errorText: passwordError,
+                    obscureText: true,
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (_) => login(context, username, password),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => PasswordRecoveryScreen()),
+                        );
+                      },
+                      child: const Text(
+                        'Forgot Password?',
                         style: TextStyle(
                           color: Colors.blue,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: screenHeight * .075,
+                  ),
+                  FormButton(
+                    text: 'Log In',
+                    onPressed: () => login(context, username, password),
+                  ),
+                  SizedBox(
+                    height: screenHeight * .15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => SignUpScreen()),
+                        );
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          text: "I'm a new user, ",
+                          style: TextStyle(color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: 'Sign Up',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -144,13 +168,23 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
       final responseData = jsonDecode(response.body);
       final token = responseData['token'];
       await http_request.saveToken(token);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Welcome $username'),
+        ),
       );
-      print('Login successful $token');
+      Future.delayed(Duration(seconds: 1), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => home()),
+        );
+      });
     } else {
-      print('Login failed');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${response.body}'),
+        ),
+      );
     }
   }
 }
@@ -221,42 +255,6 @@ class FormButton extends StatelessWidget {
         text,
         style: const TextStyle(fontSize: 16),
       ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              // Call the logout function and navigate back to the login screen
-              logout(context);
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text(
-          'Welcome to the Home Page!',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
-  }
-
-  void logout(BuildContext context) async {
-    http_request.logout();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SimpleLoginScreen()),
     );
   }
 }

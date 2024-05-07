@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class AccidentPage extends StatelessWidget {
@@ -42,9 +41,11 @@ class AccidentPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 25,),
+                  SizedBox(
+                    height: 25,
+                  ),
                   Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Car Accident",
@@ -53,7 +54,9 @@ class AccidentPage extends StatelessWidget {
                           color: Color.fromRGBO(255, 223, 223, 1),
                         ),
                       ),
-                      SizedBox(height: 6,),
+                      SizedBox(
+                        height: 6,
+                      ),
                       Text(
                         "Accidents  Help Videos",
                         style: TextStyle(
@@ -63,7 +66,9 @@ class AccidentPage extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: 40,),
+                  SizedBox(
+                    height: 40,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -81,13 +86,17 @@ class AccidentPage extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            SizedBox(width: 5,),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Icon(
                               Icons.timer_outlined,
                               size: 20,
                               color: Color.fromRGBO(255, 223, 223, 1),
                             ),
-                            SizedBox(width: 6,),
+                            SizedBox(
+                              width: 6,
+                            ),
                             Text(
                               "10 min",
                               style: TextStyle(
@@ -99,7 +108,9 @@ class AccidentPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(width: 60,),
+                      SizedBox(
+                        width: 60,
+                      ),
                       Container(
                         width: 180,
                         height: 25,
@@ -120,7 +131,9 @@ class AccidentPage extends StatelessWidget {
                               size: 20,
                               color: Color.fromRGBO(223, 181, 181, 1),
                             ),
-                            SizedBox(width: 5,),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text(
                               "First aid",
                               style: TextStyle(
@@ -134,7 +147,9 @@ class AccidentPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                 ],
               ),
             ),
@@ -148,10 +163,14 @@ class AccidentPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Row(
                       children: [
-                        SizedBox(width: 15,),
+                        SizedBox(
+                          width: 15,
+                        ),
                         Row(
                           children: [
                             Text(
@@ -162,7 +181,9 @@ class AccidentPage extends StatelessWidget {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-                            SizedBox(width: 120,),
+                            SizedBox(
+                              width: 120,
+                            ),
                             Row(
                               children: [
                                 Icon(
@@ -184,118 +205,121 @@ class AccidentPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                   Expanded(child: ListView.builder(
-
-                     itemCount: 3,
-                       itemBuilder: (_,int i){
-                         List<Map<String, dynamic>> items = [
-                           {
-                             'img': "lib/video/pics/gstAcc1.jfif",
-                             'title': "helping the people"
-                           },
-                           {
-                             'img': "lib/video/pics/gstAcc2.jfif",
-                             'title': "trying to keep people awake"
-                           },
-                           {
-                             'img': "lib/video/pics/call114.jfif",
-                             'title': "call 114 "
-                           },
-                           {
-                           },
-
-
-
-                         ];
-                         String imagePath = items[i]['img'];
-                         String title = items[i]['title'];
-                       return GestureDetector(
-                         onTap: (){
-                           debugPrint(i.toString());
-                         },
-                         child: Container(
-                           padding: EdgeInsets.only( left: 10,),
-                           height: 135,
-
-
-                           child: Column(
-                             children: [
-                               Row(
-                            children: [
-                              Container(
-                                width: 95,
-                                height: 95,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                           imagePath,
-                                    )
-                                  )
+                    Expanded(
+                        child: ListView.builder(
+                            itemCount: 3,
+                            itemBuilder: (_, int i) {
+                              List<Map<String, dynamic>> items = [
+                                {
+                                  'img': "lib/video/pics/gstAcc1.jfif",
+                                  'title': "helping the people"
+                                },
+                                {
+                                  'img': "lib/video/pics/gstAcc2.jfif",
+                                  'title': "trying to keep people awake"
+                                },
+                                {
+                                  'img': "lib/video/pics/call411.jpg",
+                                  'title': "call 411 "
+                                },
+                                {},
+                              ];
+                              String imagePath = items[i]['img'];
+                              String title = items[i]['title'];
+                              return GestureDetector(
+                                onTap: () {
+                                  debugPrint(i.toString());
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: 10,
+                                  ),
+                                  height: 135,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 95,
+                                            height: 95,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                  imagePath,
+                                                ))),
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.arrow_forward,
+                                                color: Colors.transparent,
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                title,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 3),
+                                                child: Text(
+                                                  '30 secondes',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w300,
+                                                    color: Colors.grey[500],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 18,
+                                      ),
+                                      Row(
+                                        children: [
+                                          for (int ii = 0; ii < 100; ii++)
+                                            ii.isEven
+                                                ? Container(
+                                                    width: 4,
+                                                    height: 1,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.blueGrey[300],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width: 3,
+                                                    height: 1,
+                                                    color: Colors.white,
+                                                  )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                child: IconButton(
-                                  icon: Icon(Icons.arrow_forward,
-                               color: Colors.transparent ,),
-                                  onPressed: () {
-
-                                  },
-                                ),
-                              ),
-                              
-                             SizedBox(width: 10),
-                             Column(
-                               mainAxisAlignment: MainAxisAlignment.center,
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                 Text(
-                                   title,
-                                   style: TextStyle(
-                                     fontSize: 16,
-                                     fontWeight: FontWeight.bold,
-                                   ),
-                                 ),
-                                     SizedBox(height: 10,),
-                                 Padding(
-                                   padding: EdgeInsets.only(top:3),
-                                   child: Text(
-                                     '30 secondes',
-                                         style: TextStyle(
-                                           fontSize: 10,
-                                           fontWeight: FontWeight.w300,
-                                           color: Colors.grey[500],
-                                         ),
-                                   ),
-                                 )
-                               ],
-                             ),
-
-
-                            ],
-                               ),
-                               SizedBox(height: 18,),
-                               Row(
-                                 children: [
-                                   for(int ii=0;ii<100;ii++)
-                                   ii.isEven?Container(
-                                     width: 4,
-                                     height: 1,
-                                     decoration: BoxDecoration(
-                                       color: Colors.blueGrey[300],
-                                       borderRadius: BorderRadius.circular(2),
-
-                                     ),
-                                   ):Container(
-                                     width: 3,
-                                     height: 1,
-                                     color: Colors.white,
-                                   )
-                                 ],
-                               )
-                             ],
-                           ),
-                         ),
-                       );
-                   }))
+                              );
+                            }))
                   ],
                 ),
               ),

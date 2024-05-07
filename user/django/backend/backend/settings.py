@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     #3rd party
     'rest_framework',
     'rest_framework.authtoken',
+    #web(cros)
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -44,7 +46,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -79,8 +84,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
         'HOST': config('HOST'),  
         'PORT': config('PORT'),
     }
-}
-"""
+}"""
 
 DATABASES = {
     'default': {
@@ -132,3 +136,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    # other settings...
+}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ntouati620@gmail.com'
+EMAIL_HOST_PASSWORD = 'cxgdzjhwlllmpgyg'

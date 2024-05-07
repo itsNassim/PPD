@@ -1,32 +1,57 @@
 import 'package:flutter/material.dart';
-
-import 'package:projetppd_2/ProfilPage.dart';
-import 'package:projetppd_2/AcceuilPage.dart';
 import 'package:projetppd_2/map.dart';
-import 'package:projetppd_2/video/formation.dart';
+import 'package:projetppd_2/pages/home.dart';
+import 'package:projetppd_2/profile/profilePage.dart';
+import 'package:projetppd_2/video/main.dart';
+import 'package:projetppd_2/pages/demendLogIn.dart';
+import 'package:projetppd_2/login-signup/http_request.dart' as http_request;
 
 class Navigation extends StatefulWidget {
-  const Navigation({super.key});
+  const Navigation({Key? key}) : super(key: key);
+
   @override
-  State<Navigation> createState() => _navigation();
+  State<Navigation> createState() => _NavigationState();
 }
 
-class _navigation extends State<Navigation> {
+class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
-  List<Widget> body = [
-    const AcceuilPage(),
-    //Image.asset('lib/iconss/domicile.png',height: 120,width:60),
-    const MapPage(),
-    const videoInfo(),
 
-    const ProfilPage(),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 252, 234, 234),
       body: Center(
-        child: body[_currentIndex],
+        child: FutureBuilder<bool>(
+          future: http_request.isLoggedIn(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else {
+              if (snapshot.hasData && snapshot.data!) {
+                // User is logged in
+                return IndexedStack(
+                  index: _currentIndex,
+                  children: [
+                    home(),
+                    const MapPage(),
+                    VideoInfo(),
+                    SettingsScreen(),
+                  ],
+                );
+              } else {
+                // User is not logged in
+                return IndexedStack(
+                  index: _currentIndex,
+                  children: [
+                    home(),
+                    LoginSignUpButtons(),
+                    LoginSignUpButtons(),
+                    LoginSignUpButtons(),
+                  ],
+                ); // Replace MyApp with your login page widget
+              }
+            }
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromARGB(255, 120, 13, 11),
@@ -34,13 +59,6 @@ class _navigation extends State<Navigation> {
         onTap: (int newIndex) {
           setState(() {
             _currentIndex = newIndex;
-
-            if (newIndex == 3) {
-              // Navigator.push(
-              //   context,
-              //MaterialPageRoute(builder: (context) => const ProfilPage()),
-              //);
-            }
           });
         },
         items: [
@@ -60,7 +78,7 @@ class _navigation extends State<Navigation> {
             ),
           ),
           BottomNavigationBarItem(
-              label: 'map',
+              label: 'Map',
               icon: Column(
                 children: [
                   Image.asset(
@@ -76,7 +94,7 @@ class _navigation extends State<Navigation> {
                 ],
               )),
           BottomNavigationBarItem(
-              label: 'formation',
+              label: 'Formation',
               icon: Column(
                 children: [
                   Image.asset('lib/iconss/la-gestion.png',
@@ -90,7 +108,7 @@ class _navigation extends State<Navigation> {
                 ],
               )),
           BottomNavigationBarItem(
-              label: 'profil',
+              label: 'Profile',
               icon: Column(
                 children: [
                   Image.asset(

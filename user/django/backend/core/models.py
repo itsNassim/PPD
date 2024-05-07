@@ -14,7 +14,6 @@ class Person(models.Model):
     phone_number = models.CharField(max_length=20, null=False)
     gender = models.CharField(max_length=10, choices=Gender.choices, null=False)
     date_of_birth = models.DateField()
-    place_of_birth = models.CharField(max_length=50,choices=AlgeriaCities.choices, null=False)
     address = models.CharField(max_length=255, null=False)
     role = models.CharField(max_length=20, choices=Role.choices, null=False)
     is_active = models.BooleanField(default=True)
@@ -28,8 +27,7 @@ class AppUser(models.Model):
     blood_group = models.CharField(max_length=3, choices=BloodGroup.choices, blank=True, null=True)
     number_of_warnings = models.IntegerField(default=0)
     number_of_bans = models.IntegerField(default=0)
-    latitude = models.FloatField(null=True, blank=True)  # Latitude field
-    longitude = models.FloatField(null=True, blank=True)  # Longitude field
+
     def __str__(self):
         return f"{self.person.first_name} {self.person.last_name}"
     
@@ -60,14 +58,29 @@ class Dispatcher(models.Model):
 
 
 
-
-"""class Diseases(models.Model):
+class Disease(models.Model):
+    disease_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
-    class Meta:
-        verbose_name = "Disease"
-        verbose_name_plural = "Diseases"
-"""
+    def __str__(self):
+        return self.name
+
+
+class UserDisease(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    disease = models.ForeignKey(Disease, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} - {self.disease}"
+
+
+class PasswordReset(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    confirmation_code = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Password reset request for {self.user.email}"
 
 
 """

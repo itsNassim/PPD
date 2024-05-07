@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart'; // Updated import statement
+import 'package:latlong2/latlong.dart'; // Updated import
 import 'package:geolocator/geolocator.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({Key? key}) : super(key: key);
 
   @override
-  State<MapPage> createState() => _mapState();
+  _MapPageState createState() => _MapPageState();
 }
 
-class _mapState extends State<MapPage> {
-  Position? _currentPosition; // Initialize _currentPosition to null
+class _MapPageState extends State<MapPage> {
+  Position? _currentPosition;
   final MapController _mapController = MapController();
-  double zoom = 20;
+  double zoom = 15; // Adjust the initial zoom level here
 
   @override
   void initState() {
@@ -21,7 +21,6 @@ class _mapState extends State<MapPage> {
     _getCurrentLocation();
   }
 
-  // Method to get the current location
   void _getCurrentLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -41,8 +40,8 @@ class _mapState extends State<MapPage> {
 
     _mapController.move(
       LatLng(
-        _currentPosition!.latitude - 1.0651983,
-        _currentPosition!.longitude + 128.7245,
+        _currentPosition!.latitude,
+        _currentPosition!.longitude,
       ),
       _mapController.zoom,
     );
@@ -52,12 +51,49 @@ class _mapState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Map page"),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        toolbarHeight: 60.0,
+        title: const Text(
+          'AIDNOW MAP',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.black87,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       body: Stack(
         children: [
-          content(),
+          FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(
+              center: _currentPosition != null
+                  ? LatLng(
+                      _currentPosition!.latitude, _currentPosition!.longitude)
+                  : LatLng(28.0289837, 1.6666663),
+              zoom: zoom,
+              interactionOptions: const InteractionOptions(
+                  flags: ~InteractiveFlag.doubleTapDragZoom),
+            ),
+            children: [
+              openStreetMapTileLayer,
+              if (_currentPosition != null)
+                MarkerLayer(markers: [
+                  Marker(
+                      point: LatLng(_currentPosition!.latitude,
+                          _currentPosition!.longitude),
+                      width: 60,
+                      height: 60,
+                      alignment: Alignment.centerLeft,
+                      child: const Icon(
+                        Icons.location_pin,
+                        size: 60,
+                        color: Colors.red,
+                      ))
+                ])
+            ],
+          ),
           Positioned(
             bottom: 16.0,
             right: 16.0,
@@ -65,13 +101,21 @@ class _mapState extends State<MapPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 FloatingActionButton(
-                  onPressed: _zoomIn,
-                  child: Icon(Icons.add),
+                  onPressed: _getCurrentLocation,
+                  child: const Icon(Icons.my_location),
+                  backgroundColor: const Color.fromARGB(255, 59, 117, 233),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
+                FloatingActionButton(
+                  onPressed: _zoomIn,
+                  child: const Icon(Icons.add),
+                  backgroundColor: const Color.fromARGB(255, 59, 117, 233),
+                ),
+                const SizedBox(height: 8.0),
                 FloatingActionButton(
                   onPressed: _zoomOut,
-                  child: Icon(Icons.remove),
+                  child: const Icon(Icons.remove),
+                  backgroundColor: const Color.fromARGB(255, 59, 117, 233),
                 ),
               ],
             ),
@@ -88,45 +132,9 @@ class _mapState extends State<MapPage> {
   void _zoomOut() {
     _mapController.move(_mapController.center, _mapController.zoom - 1);
   }
-
-  Widget content() {
-    return FlutterMap(
-      mapController: _mapController,
-      options: MapOptions(
-        center: _currentPosition != null
-            ? LatLng(_currentPosition!.latitude - 1.0651983,
-                _currentPosition!.longitude + 128.7245)
-            : LatLng(28.0289837, 1.6666663),
-        zoom: zoom,
-        interactionOptions:
-            const InteractionOptions(flags: ~InteractiveFlag.doubleTapDragZoom),
-      ),
-      children: [
-        openStreetMapTileLayer,
-        MarkerLayer(markers: [
-          Marker(
-              point: _currentPosition != null
-                  ? LatLng(_currentPosition!.latitude - 1.0651983,
-                      _currentPosition!.longitude + 128.7245)
-                  : LatLng(28.0289837, 1.6666663),
-              width: 60,
-              height: 60,
-              alignment: Alignment.centerLeft,
-              child: Icon(
-                Icons.location_pin,
-                size: 60,
-                color: Colors.red,
-              ))
-        ])
-      ],
-    );
-  }
 }
 
 TileLayer get openStreetMapTileLayer => TileLayer(
       urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       userAgentPackageName: 'dev.fleaflet.flutter_map.example',
     );
-
-
-//36.24621367246233, 6.570038483333845 univ 2

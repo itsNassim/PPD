@@ -3,15 +3,15 @@ POST http://127.0.0.1:8000/authentication/signup/
 Content-Type: application/json
 
 {
-    "email": "adam@mail.com",
-    "username": "adam",
+    "email": "b@mail.com",
+    "username": "b",
     "password": "Pass1234!",
     "first_name": "Adam",
     "last_name": "Smith",
     "phone_number": "1234567890",
     "gender": "Male",
     "date_of_birth": "1990-01-01",
-    "place_of_birth": "Someplace",
+    "place_of_birth": "Constantine",
     "address": "123 Street, City",
     "role": "User"
 }
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
     
-    "username": "adam",
+    "username": "b",
     "blood_group": "O+"
 }
 
