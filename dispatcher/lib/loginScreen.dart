@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 62, 99, 137),
+                      const Color.fromARGB(62, 92, 55, 91),
                     ),
                   ),
                   child: const Text(
