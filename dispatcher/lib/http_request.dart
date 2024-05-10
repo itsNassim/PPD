@@ -4,7 +4,7 @@ import 'dart:convert';
 Future<http.Response> login(String username, String password) async {
   try {
     final url =
-        Uri.parse('http://127.0.0.1:8000/authentication/login/dispatcher/');
+        Uri.parse('http://10.0.2.2:8000/authentication/login/dispatcher/');
     final response = await http.post(
       url,
       body: jsonEncode({'username': username, 'password': password}),
@@ -17,4 +17,3 @@ Future<http.Response> login(String username, String password) async {
     throw Exception('Failed to login: $e');
   }
 }
-
