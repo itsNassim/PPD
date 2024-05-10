@@ -5,6 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Flutter: Attach to Device",
+            "type": "dart",
+            "request": "attach"
+        },
+        {
             "name": "despinterface",
             "request": "launch",
             "type": "dart"
@@ -14,6 +19,12 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
+        },
+        {
+            "name": "android1",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554"
         },
         {
             "name": "despinterface (release mode)",
