@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 const appId = "9184bc7d6d244525a0603fff92d33104";
 const token =
-    "007eJxTYAiI2nfMm+39j/xvLHMWt3mbhHO8/2Y0+Vb9HXmpt6HWn80VGCwNLUySks1TzFKMTExMjUwTDcwMjNPS0iyNUoyNDQ1M6mOs0xoCGRkWirsyMjJAIIjPwZCckZiXl5pjyMAAAMtpH9I=";
+    "007eJxTYOj4E3dbZZrV7UvXBC73Kl1k1myM/uYqPEG8MC17rp3GQR8FBktDC5OkZPMUsxQjExNTI9NEAzMD47S0NEujFGNjQwOT5xa2aQ2BjAwZ/6qYGRkgEMTnYEjOSMzLS80xZGAAAJIEH7I=";
 const channel = "channel1";
 
 class ReceiveCallScreen extends StatefulWidget {
