@@ -29,7 +29,8 @@ class _ReceiveCallScreenState extends State<ReceiveCallScreen>
   bool _localUserJoined = false;
   late RtcEngine _engine;
   String baseUrl = 'http://10.0.2.2:8000/authentication';
-  String token = '5074be2cdca19a979d8ebe5f679b32207668ee30';
+  String token =
+      '007eJxTYOj4E3dbZZrV7UvXBC73Kl1k1myM/uYqPEG8MC17rp3GQR8FBktDC5OkZPMUsxQjExNTI9NEAzMD47S0NEujFGNjQwOT5xa2aQ2BjAwZ/6qYGRkgEMTnYEjOSMzLS80xZGAAAJIEH7I=';
   Map<String, dynamic> personData = {};
   Map<String, dynamic> appuserData = {};
   @override
@@ -566,6 +567,7 @@ class _ReceiveCallScreenState extends State<ReceiveCallScreen>
                               ),
                             ),
                             // Placeholder for other feature
+                            /*
                             Container(
                               color: Colors.blue,
                               child: Center(
@@ -577,8 +579,9 @@ class _ReceiveCallScreenState extends State<ReceiveCallScreen>
                                   ),
                                 ),
                               ),
-                              // _remoteVideo(),
                             ),
+                              */
+                            _remoteVideo(),
                           ],
                         ),
                       ), // Add discussion and video call widgets here
